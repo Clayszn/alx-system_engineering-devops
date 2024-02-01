@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Listening server port 2398 from client localhost.
+
+nc -l 2389
