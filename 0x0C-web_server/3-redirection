@@ -1,9 +1,21 @@
 #!/usr/bin/env bash
-# This script installs nginx on ubuntu server
+# Configure your Nginx server so that /redirect_me is redirecting to my github page.
+# The redirection is configured as a "301 Moved Permanently" message
 
-sudo apt-get install -y nginx
-sudo ufw allow 'Nginx HTTP'
-echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
-line="\\\trewrite ^/redirect_me http://clayshub.tech permanent;"
-sudo sed -i "26i $line" /etc/nginx/sites-available/default
-sudo service nginx restart
+apt-get update
+apt-get install -y nginx
+
+mkdir /etc/nginx/html
+touch /etc/nginx/html/index.html
+echo "Hello Word!" > /etc/nginx/html/index.html
+printf %s "server {
+    listen 80;
+    listen [::]:80 default_server;
+    root   /etc/nginx/html;
+    index  index.html index.htm;
+    location /redirect_me {
+        return 301 https://github.com/Davidshub11;
+    }
+}" > /etc/nginx/sites-available/default
+
+service nginx restart
