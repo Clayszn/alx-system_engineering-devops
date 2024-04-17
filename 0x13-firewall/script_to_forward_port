@@ -1,0 +1,28 @@
+#!usr/bin/env bash
+
+# Check if the script is being run as root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
+# Check if UFW is installed
+if ! command -v ufw &> /dev/null
+then
+    echo "UFW is not installed. Please install it first."
+    exit
+fi
+
+# Redirect traffic from port 8080/tcp to port 80/tcp
+echo "
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+COMMIT
+" >> /etc/ufw/before.rules
+
+# Reload UFW to apply changes
+sudo fw reload
+
+echo "Port 8080/tcp redirected to port 80/tcp successfully."
+

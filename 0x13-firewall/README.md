@@ -14,3 +14,11 @@ Configure ufw so that it blocks all incoming traffic, except the following TCP p
 :PREROUTING ACCEPT [0:0]
 -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
 COMMIT
+
+After adding this line of code to the file, reload the firewall by running
+sudo ufw reload
+
+test on the web-02 by running 
+curl -sI web-01.clayshub.tech:80
+
+curl -sI web-01.clayshub.tech:8080
