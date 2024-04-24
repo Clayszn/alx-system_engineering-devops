@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 # Generates a MySQL dump and creates a compressed archive out of it.
 
-# Check if exactly one argument (MySQL password) is provided
+# Check if exactly one argument (MySQL password file) is provided
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <mysql password>"
+    echo "Usage: $0 <mysql_password_file>"
     exit 1
 fi
 
+# Read MySQL password from the provided file
+mysql_password=$(<"$1")
+
 # Dump all databases to backup.sql
-mysqldump --all-databases -u root --password="$1" > backup.sql
+mysqldump --all-databases -u root --password="$mysql_password" > backup.sql
 
 # Check if mysqldump was successful
 if [ $? -ne 0 ]; then
