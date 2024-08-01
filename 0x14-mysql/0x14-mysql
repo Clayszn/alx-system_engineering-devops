@@ -1,5 +1,5 @@
 #!usr/bin/env bash
-#insall mysql
+#install mysql
 
 sudo apt update
 sudp apt unstall -y mysql-server
