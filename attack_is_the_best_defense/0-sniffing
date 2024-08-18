@@ -3,8 +3,7 @@ auth login
 
 14
 bXlsb2dpbg==
-
+decoded string = mylogin
 22
 bXlwYXNzd29yZDk4OTgh
-
-mypassword9898!
+decoded string = mypassword9898!
